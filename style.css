@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "UniqueVariable";
+    src: url("fonts/Unique-VF.ttf") format("truetype-variations");
+}
+
+@font-face {
+    font-family: "FigtreeVariable";
+    src: url("fonts/Figtree-VF.ttf") format("truetype");
+}
+
+body {
+    font-size: 2em;
+    font-family: "FigtreeVariable";
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a1a1a;
+    color: #faf1f1;
+    height: 100vh;
+    margin: auto;
+}
+
+main {
+    width: min(80vw, 1200px);
+    text-align: center;
+}
+
+#hello {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tai {
+    background-color: #faf1f1;
+    mask: url(img/tai-optimized.svg) no-repeat center;
+    mask-size: contain;
+}
