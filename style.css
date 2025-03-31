@@ -1,21 +1,16 @@
 @font-face {
-    font-family: "UniqueVariable";
-    src: url("fonts/Unique-VF.ttf") format("truetype-variations");
-}
-
-@font-face {
-    font-family: "FigtreeVariable";
-    src: url("fonts/Figtree-VF.ttf") format("truetype-variations");
-}
-
-@font-face {
-    font-family: "DINdong";
-    src: url("fonts/DINdong.ttf") format("truetype");
-}
-
-@font-face {
     font-family: "InterVariable";
     src: url("fonts/Inter-VF.ttf") format("truetype-variations");
+}
+
+@font-face {
+    font-family: "BoldonseRegular";
+    src: url("fonts/Boldonse-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "UrbanistVariable";
+    src: url("fonts/Urbanist-VF.ttf") format("truetype-variations");
 }
 
 body {
@@ -33,7 +28,11 @@ body {
 
 main {
     width: min(80vw, 1200px);
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 #hello {
@@ -52,7 +51,8 @@ main {
 }
 
 h1 {
-    font-family: "UniqueVariable";
+    width: 70%;
+    font-family: "BoldonseRegular";
     margin: 15px 0;
-    line-height: 0.8;
+    line-height: 1.3;
 }
