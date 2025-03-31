@@ -5,16 +5,24 @@
 
 @font-face {
     font-family: "FigtreeVariable";
-    src: url("fonts/Figtree-VF.ttf") format("truetype");
+    src: url("fonts/Figtree-VF.ttf") format("truetype-variations");
+}
+
+@font-face {
+    font-family: "DINdong";
+    src: url("fonts/DINdong.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "InterVariable";
+    src: url("fonts/Inter-VF.ttf") format("truetype-variations");
 }
 
 body {
     font-size: 2em;
-    font-family: "FigtreeVariable";
-}
-
-body {
+    font-family: "InterVariable";
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #1a1a1a;
@@ -30,6 +38,8 @@ main {
 
 #hello {
     display: flex;
+    width: fit-content;
+    margin: 0 auto;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -39,4 +49,9 @@ main {
     background-color: #faf1f1;
     mask: url(img/tai-optimized.svg) no-repeat center;
     mask-size: contain;
+}
+
+h1 {
+    font-family: "UniqueVariable";
+    margin: 0;
 }
