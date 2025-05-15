@@ -37,6 +37,10 @@ h1, h2, h3 {
     font-family: "Boldonse";
 }
 
+#header-section {
+    margin-bottom: 60px;
+}
+
 #tj-header {
     font-size: 2.5em;
     margin-top: 60px;
