@@ -7,10 +7,10 @@ async function updateStatus() {
         })
         .then(data => {
             const statusElements = document.querySelectorAll('.status');
-            console.log(statusElements);
-            const statuses = data.contents.split("\n");
+            const statuses = data.contents.split("\r\n");
+            
             statusElements.forEach(element => {
-                var status = statuses[Math.floor((Math.random() * statuses.length))]
+                var status = statuses[Math.floor((Math.random() * statuses.length))];
                 element.innerHTML = (status == "\\" ? "" : `"${status}"`);
             });
         });
