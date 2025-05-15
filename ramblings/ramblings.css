@@ -1,0 +1,52 @@
+body {
+    justify-content: flex-start;
+    box-sizing: border-box;
+    min-height: 1vh;
+}
+
+main {
+    margin: 80px auto;
+}
+
+#ramblings-header {
+    text-transform: uppercase;
+}
+
+.ramblings-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    width: 100%;
+    height: 100px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-left: 0px solid #faf1f1;
+    transition: 0.4s cubic-bezier(.29,1.54,.75,1);
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.ramblings-card:hover {
+    border-left: 4px solid #faf1f1;
+    padding-left: 25px;
+}
+
+.ramblings-title {
+    font-family: "Boldonse";
+    font-size: 20px;
+    transition: 0.4s cubic-bezier(.29,1.54,.75,1);
+}
+
+.ramblings-card:hover .ramblings-title {
+    font-size: 23px;
+}
+
+.ramblings-date {
+    opacity: 0.5;
+    font-size: 20px;
+}
+
+#ramblings-viewer {
+    display: none;
+}
