@@ -61,3 +61,7 @@ h1, h2, h3 {
 * .ph, * .ph-bold, * .ph-fill {
     font-size: 1.2em;
 }
+
+.back-button {
+    cursor: pointer;
+}
