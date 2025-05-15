@@ -1,6 +1,6 @@
 async function updateStatus() {
     try {
-        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://pastebin.com/raw/RS2K4xL3')}`)
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://pastebin.com/raw/RS2K4xL3')}?nocache=${Date.now()}`)
         .then(response => {
             if (response.ok) return response.json()
             throw new Error('Network response was not ok.')
