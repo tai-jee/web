@@ -1,0 +1,325 @@
+:root {
+    --base00: #1f1c16; /* bg */
+    --base01: #35322d; /* bg_alt */
+    --base02: #47443f; /* surface0 */
+    --base03: #b8a48c; /* fg_subtle (comments) */
+    --base04: #d4c4a8; /* fg_muted */
+    --base05: #faf0e6; /* fg */
+    --base06: #e8d5b7; /* fg_dim */
+    --base07: #fef4e4; /* bright white */
+
+    --base08: #e87777; /* red */
+    --base09: #da9050; /* orange */
+    --base0A: #eac67a; /* yellow */
+    --base0B: #8cb870; /* green */
+    --base0C: #6ab8b0; /* teal */
+    --base0D: #7fa8d4; /* blue */
+    --base0E: #b094cc; /* purple */
+    --base0F: #cc88aa; /* pink */
+
+    --content-width: min(90vw, 120rch);
+
+    --gradient-border: radial-gradient(transparent, var(--base06), transparent)
+        27;
+    --gradient-border-v: linear-gradient(
+            to bottom,
+            var(--base06),
+            transparent 80%
+        )
+        27;
+    --gradient-border-h: linear-gradient(
+            to right,
+            var(--base06),
+            transparent 80%
+        )
+        27;
+}
+
+@font-face {
+    font-family: "Libron";
+    src: url("fonts/Libron-Regular.woff2");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Libron";
+    src: url("fonts/Libron-Bold.woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Libron";
+    src: url("fonts/Libron-Italic.woff2");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Libron";
+    src: url("fonts/Libron-BoldItalic.woff2");
+    font-weight: 700;
+    font-style: italic;
+}
+
+* {
+    box-sizing: border-box;
+    corner-shape: squircle;
+}
+
+*::selection {
+    background-color: var(--base02);
+}
+
+html {
+    color: var(--base05);
+    background-color: var(--base00);
+}
+
+body {
+    margin: 0;
+    text-transform: lowercase;
+    font-family: "Libron", sans-serif;
+    font-size: 1.2em;
+    line-height: 1.4;
+}
+
+main {
+    position: relative;
+    width: var(--content-width);
+    margin: auto;
+
+    @media only screen and (max-width: 768px) {
+        width: 100vw;
+        padding-inline: 1rem;
+    }
+}
+
+header {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 4rem;
+    width: var(--content-width);
+    margin-top: 2rem;
+    margin-inline: auto;
+
+    pointer-events: none;
+
+    > .title {
+        font-size: 1.4em;
+    }
+
+    > .splash-text {
+        font-size: 0.8em;
+        font-style: italic;
+    }
+
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        margin: 0;
+        padding-inline: 1rem;
+    }
+}
+
+#star-field-container {
+    position: relative;
+
+    border-style: solid;
+    border-width: 0.5px;
+    border-image: var(--gradient-border);
+    border-inline: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-inline: auto;
+    margin-bottom: 2rem;
+
+    width: var(--content-width);
+    height: 24rem;
+    overflow: hidden;
+
+    canvas {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 24rem;
+    }
+
+    h2 {
+        position: absolute;
+        z-index: 2;
+
+        pointer-events: none;
+
+        font-size: 2em;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    #star-field-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        box-shadow: inset 0 0 10rem 4rem var(--base00);
+        mask: radial-gradient(transparent, rgba(0, 0, 0, 0.4) 20%, black 80%);
+        background-image: linear-gradient(
+            to left,
+            var(--base00) 10%,
+            transparent,
+            var(--base00) 90%
+        );
+        backdrop-filter: blur(100px);
+    }
+
+    @media only screen and (max-width: 768px) {
+        width: 100vw;
+
+        margin-bottom: -8rem;
+        border-bottom: none;
+
+        h2 {
+            transform: translateY(-3rem);
+            font-size: 1.75em;
+        }
+
+        #star-field-vignette {
+            mask: radial-gradient(
+                ellipse at top,
+                transparent,
+                rgba(0, 0, 0, 0.4) 20%,
+                black 80%
+            );
+            background-image: linear-gradient(transparent, var(--base00));
+        }
+    }
+}
+
+.section {
+    display: flex;
+    align-items: baseline;
+    gap: 2ch;
+
+    > .subheading {
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: normal;
+
+        text-align: right;
+
+        color: var(--base03);
+
+        margin: 0;
+        min-width: 12ch;
+    }
+
+    > .section-content {
+        max-width: 100rch;
+        padding-left: 2ch;
+
+        border-width: 0 0 0 0.5pt;
+        border-style: solid;
+        border-image: var(--gradient-border-v);
+
+        margin-bottom: 1em;
+
+        & :first-child {
+            margin-top: 0;
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+
+        > .subheading {
+            text-align: left;
+            margin-bottom: 0.5em;
+        }
+
+        > .section-content {
+            padding-left: 0;
+
+            border-image: var(--gradient-border-h);
+            border-width: 0.5pt 0 0 0;
+
+            & > :first-child {
+                margin-top: 1em;
+            }
+        }
+    }
+}
+
+.dict {
+    cursor: help;
+    color: var(--base0E);
+    border-bottom: 0.05rem dashed var(--base02);
+}
+
+[popover] {
+    animation: fade-out 0.2s ease-out;
+
+    position-area: bottom;
+    position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
+    inset: auto;
+
+    width: 320px;
+    max-width: 60rch;
+    padding: 12pt;
+    margin: 0.3rem;
+
+    border-radius: 12pt;
+    border: 0.2pt solid var(--base01);
+
+    color: inherit;
+
+    background-color: color-mix(in srgb, var(--base00), transparent 20%);
+    backdrop-filter: blur(6px);
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    .dict-term,
+    .dict-def {
+        margin: 0;
+    }
+
+    .dict-term {
+        font-weight: bold;
+        font-style: italic;
+        color: var(--base03);
+    }
+}
+
+[popover]:popover-open {
+    animation: fade-in 0.2s ease-out;
+    opacity: 1;
+}
+
+.music-history-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+
+    padding-block: 0.5rem;
+    border-top: 0.5pt solid var(--base01);
+
+    p {
+        margin: 0;
+    }
+
+    .track-artist {
+        font-size: 0.8em;
+        font-style: italic;
+        opacity: 0.8;
+    }
+}
