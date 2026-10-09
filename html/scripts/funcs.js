@@ -1,8 +1,4 @@
-
-
 //////////
-
-
 
 //////////
 
@@ -38,6 +34,9 @@ async function updateLastfmData() {
     let trackDiv = e.querySelector(".music-history-item");
     trackDiv.querySelector(".track-title").textContent = track.name;
     trackDiv.querySelector(".track-artist").textContent = track.artist["#text"];
+    if ("@attr" in track && track["@attr"].nowplaying === "true") {
+      trackDiv.classList.add("now-playing");
+    }
     trackHistoryContainer.appendChild(e);
   });
 

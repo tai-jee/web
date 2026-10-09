@@ -118,8 +118,11 @@
             <section class="section music-activity">
                 <h3 class="subheading">Music</h3>
                 <div class="section-content">
-                    <p>Most recent tracks on last.fm:</p>
-                    <div id="recent-tracks"></div>
+                    <!-- create with height of 5 tracks to prevent layout shifts -->
+                    <div
+                        id="recent-tracks"
+                        style="height: calc((1lh + 1rem) * 5);"
+                    ></div>
                 </div>
             </section>
         </main>
