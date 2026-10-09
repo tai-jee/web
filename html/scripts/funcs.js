@@ -29,6 +29,8 @@ async function updateLastfmData() {
 
   console.log(historyItemTemplate);
 
+  trackHistoryContainer.textContent = "";
+
   recentTracks.forEach((track) => {
     let e = document.importNode(historyItemTemplate.content, true);
     let trackDiv = e.querySelector(".music-history-item");
@@ -39,6 +41,8 @@ async function updateLastfmData() {
     }
     trackHistoryContainer.appendChild(e);
   });
+
+  trackHistoryContainer.style.visibility = "visible";
 
   console.log("LASTFM DATA: ", data);
 

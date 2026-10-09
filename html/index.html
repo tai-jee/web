@@ -121,8 +121,13 @@
                     <!-- create with height of 5 tracks to prevent layout shifts -->
                     <div
                         id="recent-tracks"
-                        style="height: calc((1lh + 1rem) * 5);"
-                    ></div>
+                        style="height: calc((1lh + 1rem) * 5); visibility: hidden;"
+                    >
+                        <!-- placeholder to maintain subheading alignment -->
+                        <div class="music-history-item">
+                            <p class="track-title">...</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
