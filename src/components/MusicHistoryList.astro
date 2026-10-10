@@ -1,0 +1,22 @@
+<div id="track-history" style="height: calc((1lh + 1rem) * 5);"></div>
+
+<script>
+	const data = await fetch(
+		"https://taijee-personal-site-proxy.itsme-540.workers.dev/lastfm",
+	).then((response) => response.json());
+	console.log(data);
+
+	const trackHistory = document.getElementById("track-history");
+
+	data.recenttracks.track.slice(0, 5).map((t: any) => {
+		const div = document.createElement("div");
+		div.className =
+			t["@attr"]?.nowplaying === "true"
+				? "music-history-item now-playing"
+				: "music-history-item";
+		div.innerHTML =
+			`<p class="track-title">${t.name}</p>` +
+			`<p class="track-artist">${t.artist["#text"]}</p>`;
+		trackHistory?.appendChild(div);
+	});
+</script>

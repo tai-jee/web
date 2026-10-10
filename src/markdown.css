@@ -1,0 +1,110 @@
+pre.astro-code {
+	position: relative;
+
+	padding: 1ch 1.5ch;
+
+	border: 0.5pt solid var(--base02);
+	border-radius: 12pt;
+
+	line-height: 1.5;
+
+	&::after {
+		content: "";
+
+		text-transform: lowercase;
+
+		font-size: 0.9em;
+		color: var(--base03);
+
+		display: block;
+		position: absolute;
+		right: 1.6ch;
+		bottom: 0.9ch;
+	}
+
+	&[data-language=""]::after {
+		content: "code";
+	}
+
+	&[data-language="bash"]::after {
+		content: "Bash";
+	}
+
+	&[data-language="c"]::after {
+		content: "C";
+	}
+
+	&[data-language="c#"]::after {
+		content: "C#";
+	}
+
+	&[data-language="c++"]::after {
+		content: "C++";
+	}
+
+	&[data-language="css"]::after {
+		content: "CSS";
+	}
+
+	&[data-language="go"]::after {
+		content: "Go";
+	}
+
+	&[data-language="html"]::after {
+		content: "HTML";
+	}
+
+	&[data-language="java"]::after {
+		content: "Java";
+	}
+
+	&[data-language="json"]::after {
+		content: "JSON";
+	}
+
+	&[data-language="javascript"]::after {
+		content: "JS";
+	}
+
+	&[data-language="kotlin"]::after {
+		content: "Kotlin";
+	}
+
+	&[data-language="php"]::after {
+		content: "PHP";
+	}
+
+	&[data-language="python"]::after {
+		content: "Python";
+	}
+
+	&[data-language="ruby"]::after {
+		content: "Ruby";
+	}
+
+	&[data-language="rust"]::after {
+		content: "Rust";
+	}
+
+	&[data-language="shell"]::after {
+		content: "Shell";
+	}
+
+	&[data-language="sql"]::after {
+		content: "SQL";
+	}
+
+	&[data-language="swift"]::after {
+		content: "Swift";
+	}
+
+	&[data-language="typescript"]::after {
+		content: "TS";
+	}
+}
+
+:not(pre) > code {
+	padding: 0.2em 0.4em;
+	border: 0.5pt solid var(--base02);
+	border-radius: 12pt;
+}

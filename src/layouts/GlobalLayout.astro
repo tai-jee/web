@@ -1,0 +1,52 @@
+---
+import "../style.css";
+import { Font, Image } from "astro:assets";
+
+const { pageTitle } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{ pageTitle }</title>
+
+		<Font cssVariable="--libron" />
+	</head>
+
+	<body>
+		<header class="header">
+			<span class="title">bingpie</span>
+			<span class="splash-text">not bing-pee &gt;:c</span>
+		</header>
+
+		<slot />
+
+		<footer class="footer">
+			<div class="footer-section footer-left">
+				<p class="title">bingpie</p>
+				<p class="copyright">&#169; bingpie 2026</p>
+			</div>
+			<div class="footer-section footer-middle">
+				<Image
+					src="/img/bingpie-light-88x31.png"
+					alt="bingpie 88x31"
+					width="88"
+					height="31"
+				/>
+				<Image
+					src="/img/brainmade-88x31.png"
+					alt="Brain Made"
+					width="88"
+					height="31"
+				/>
+			</div>
+			<div class="footer-section footer-right">
+				<p>Thanks for visiting c:</p>
+			</div>
+		</footer>
+	</body>
+
+	<script src="../scripts/definitions.ts"></script>
+</html>
