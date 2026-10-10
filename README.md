@@ -18,7 +18,7 @@ time when i forget about this one.
 
 after cloning the repo, set the `TUNNEL_TOKEN` environment variable in .env to
 your tunnel's token... obviously. set your tunnel route's service url to
-http://site:80.
+`http://site:80`.
 
 docker compose will then build the site and start running the tunnel with
 cloudflared.
