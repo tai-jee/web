@@ -11,7 +11,7 @@ it uses the astro framework to build the site, which is then self-hosted on my
 craptop-cum-server via nginx and a cloudflare tunnel.
 
 feel free to clone the repo and adapt it for your own use, ion care. i'll
-probably end up making another website entirely anyway in about three month's
+probably end up making another website entirely anyway in about three months'
 time when i forget about this one.
 
 ## building the site
