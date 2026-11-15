@@ -1,5 +1,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
 	fonts: [
 		{
@@ -32,9 +34,12 @@ export default defineConfig({
 			},
 		},
 	],
+
 	markdown: {
 		shikiConfig: {
 			theme: "css-variables",
 		},
 	},
+
+	adapter: cloudflare(),
 });
