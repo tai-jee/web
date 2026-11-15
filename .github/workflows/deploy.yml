@@ -36,8 +36,5 @@ jobs:
         name: Deploy
         steps:
             - name: Deploy
-              uses: cloudflare/wrangler-action@v4
-              with:
-                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  workingDirectory: site
+              working-directory: site
+              run: npm run deploy
