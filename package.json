@@ -12,7 +12,6 @@
 	},
 	"scripts": {
 		"generate-types": "wrangler types",
-		"deploy": "npx astro build && wrangler deploy",
-		"preview": "npx astro build && wrangler dev"
+		"build": "npx astro build"
 	}
 }
