@@ -13,7 +13,7 @@
 	"scripts": {
 		"generate-types": "wrangler types",
 		"build": "npx astro build",
-		"deploy": "npx wrangler deploy",
-		"preview": "npx wrangler dev"
+		"deploy": "npx astro build && wrangler deploy",
+		"preview": "npx astro build && wrangler dev"
 	}
 }
