@@ -6,7 +6,7 @@ on:
             - main
 
 jobs:
-    build:
+    deploy:
         runs-on: ubuntu-latest
         name: Build
         steps:
@@ -29,22 +29,6 @@ jobs:
             - name: Build
               working-directory: site
               run: npm run build
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v7
-              with:
-                  name: site
-                  path: site
-
-    deploy:
-        runs-on: ubuntu-latest
-        needs: build
-        name: Deploy
-        steps:
-            - name: Download artifact
-              uses: actions/download-artifact@v7
-              with:
-                  name: site
 
             - name: Deploy
               uses: cloudflare/wrangler-action@v4
