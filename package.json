@@ -12,7 +12,7 @@
         "wrangler": "^4.162.0"
     },
     "scripts": {
-        "build": "wrangler types && CLOUDFLARE_ENV=production astro build",
+        "build": "wrangler types && astro build",
         "deploy": "wrangler types && wrangler deploy",
         "preview": "wrangler types && astro build && wrangler dev"
     }
