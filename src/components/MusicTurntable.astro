@@ -120,6 +120,7 @@ const track = data.recenttracks?.track[0];
 
         overflow: hidden;
 
+        aspect-ratio: 4 / 5;
         width: 20rem;
         height: 25rem;
         padding: 1.2rem;
@@ -136,6 +137,10 @@ const track = data.recenttracks?.track[0];
         );
 
         transition: backdrop-filter 0.4s ease-in-out;
+
+        @media only screen and (max-width: 768px) {
+            width: 100%;
+        }
     }
 
     .artwork-wrap {
