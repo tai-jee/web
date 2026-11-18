@@ -25,13 +25,7 @@ const track = data.recenttracks?.track[0];
     <div class="artwork-wrap">
         <div class="artwork-aura"></div>
         <a class="artwork-anchor" target="_blank" rel="noopener noreferrer">
-            <Image
-                class="artwork"
-                width="300"
-                height="300"
-                alt=""
-                src={track.image[3]["#text"]}
-            />
+            <img class="artwork" alt="" src={track.image[3]["#text"]} />
         </a>
     </div>
     <div class="push"></div>
