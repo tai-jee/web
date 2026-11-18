@@ -1,0 +1,274 @@
+---
+import { LASTFM_API_KEY } from "astro:env/server";
+import { Image } from "astro:assets";
+
+export const prerender = false;
+
+const URL = "https://ws.audioscrobbler.com/2.0";
+const params = new URLSearchParams({
+    method: "user.getrecenttracks",
+    user: "bbqbeanburger",
+    limit: "1",
+    extended: "1",
+    format: "json",
+    api_key: LASTFM_API_KEY,
+});
+
+const url = `${URL}?${params}`;
+
+const response = await fetch(url);
+const data = (await response.json()) as any;
+const track = data.recenttracks?.track[0];
+---
+
+<astro-turntable class="turntable">
+    <div class="artwork-wrap">
+        <div class="artwork-aura"></div>
+        <a class="artwork-anchor" target="_blank" rel="noopener noreferrer">
+            <Image
+                class="artwork"
+                width="300"
+                height="300"
+                alt=""
+                src={track.image[3]["#text"]}
+            />
+        </a>
+    </div>
+    <div class="push"></div>
+    <span class="title"></span>
+    <span class="artist-when">
+        <span class="artist"></span>
+        &bull;
+        <span class="when"></span>
+    </span>
+</astro-turntable>
+
+<script>
+    import moment from "moment";
+
+    const POLLING_INTERVAL_SEC = 10;
+
+    class Turntable extends HTMLElement {
+        name?: string;
+        artist?: string;
+        uts?: number;
+        url?: string;
+        image?: string;
+
+        connectedCallback() {
+            const titleEl = this.querySelector(".title") as HTMLSpanElement;
+            const artistEl = this.querySelector(".artist") as HTMLSpanElement;
+            const whenEl = this.querySelector(".when") as HTMLSpanElement;
+            const anchorEl = this.querySelector(
+                ".artwork-anchor",
+            ) as HTMLAnchorElement;
+            const artworkEl = this.querySelector(
+                ".artwork",
+            ) as HTMLImageElement;
+
+            const update = async () => {
+                const r = await fetch("/api/lastfm-status");
+                const t = (await r.json()) as any;
+
+                if (!r.ok) {
+                    console.error("Failed to fetch lastfm-status", r);
+                    return;
+                }
+
+                const name = t?.name;
+                const artist = t?.artist.name;
+                const uts = (t?.date?.uts as unknown as number) || 0;
+                const url = t?.url;
+                const image = t?.image[3]["#text"];
+
+                if (!uts) {
+                    this.classList.toggle("playing", true);
+                    whenEl.textContent = "Now";
+                } else {
+                    this.classList.toggle("playing", false);
+                    whenEl.textContent = moment(new Date(uts * 1000)).fromNow();
+                }
+
+                this.style.setProperty("--artwork-url", `url(${image})`);
+
+                anchorEl.href = url || "#";
+                anchorEl.ariaLabel = `${artist} - ${name} on Last.fm`;
+
+                artworkEl.src = image || "";
+                artworkEl.alt = name || "";
+
+                titleEl.textContent = name || "";
+                if (titleEl.scrollWidth > titleEl.clientWidth) {
+                    titleEl.classList.add("scroll");
+                    titleEl.style.setProperty(
+                        "--scroll-width",
+                        titleEl.scrollWidth + "px",
+                    );
+                } else titleEl.classList.remove("scroll");
+
+                artistEl.textContent = artist || "";
+
+                setTimeout(update, POLLING_INTERVAL_SEC * 1000);
+            };
+
+            void update();
+        }
+    }
+
+    customElements.define("astro-turntable", Turntable);
+</script>
+
+<style>
+    .turntable {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        width: 20rem;
+        height: 25rem;
+        padding: 1.2rem;
+
+        margin-block: 0.6rlh;
+
+        border-radius: 2rem;
+        border: 0.1pt solid var(--base02);
+
+        background-image: radial-gradient(
+            circle at top,
+            transparent 60%,
+            var(--base00) 120%
+        );
+
+        transition: backdrop-filter 0.4s ease-in-out;
+    }
+
+    .artwork-wrap {
+        position: relative;
+        justify-self: center;
+
+        aspect-ratio: 1/1;
+        width: 100%;
+
+        corner-shape: round;
+        border-radius: 50%;
+    }
+
+    .artwork-anchor:hover > .artwork {
+        scale: 1.06;
+    }
+
+    .artwork {
+        position: relative;
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        corner-shape: round;
+        border-radius: 50%;
+
+        background-image: radial-gradient(transparent -30%, var(--base03) 100%);
+
+        border: 0.1pt solid var(--base03);
+
+        will-change: scale;
+        transition: scale 0.6s ease;
+    }
+
+    .artwork-aura {
+        content: "";
+
+        position: absolute;
+
+        aspect-ratio: 1/1;
+        width: 150%;
+
+        top: -10%;
+        left: -25%;
+        z-index: -1;
+
+        corner-shape: round;
+
+        background-image: var(--artwork-url);
+        background-size: cover;
+        background-position: center;
+
+        filter: contrast(100%) blur(60px);
+        opacity: 0.3;
+
+        transition:
+            opacity 0.2s ease-in-out,
+            filter 0.2s ease-in-out;
+    }
+
+    .turntable.playing .artwork-aura {
+        filter: contrast(700%) blur(60px);
+        opacity: 0.6;
+    }
+
+    .turntable.playing .artwork {
+        animation: spin 25s linear infinite;
+    }
+
+    .turntable.playing .artwork-aura {
+        animation: spin 40s linear infinite reverse;
+    }
+
+    @keyframes spin {
+        0% {
+            rotate: 0deg;
+        }
+        100% {
+            rotate: 360deg;
+        }
+    }
+
+    .push {
+        margin-top: auto;
+    }
+
+    span {
+        white-space: nowrap;
+        z-index: 1;
+    }
+
+    .title {
+        display: block;
+        font-size: 1.2rem;
+
+        &.scroll {
+            animation: scroll 8s ease-in-out infinite;
+        }
+    }
+
+    .artist-when {
+        display: inline-flex;
+        font-size: 0.8rem;
+        gap: 0.6ch;
+    }
+
+    .when {
+        font-style: italic;
+        color: var(--base04);
+    }
+
+    @keyframes scroll {
+        0%,
+        20% {
+            transform: translateX(0%);
+        }
+
+        40%,
+        80% {
+            transform: translateX(calc(calc(-1 * var(--scroll-width)) + 100%));
+        }
+
+        90%,
+        100% {
+            transform: translateX(0%);
+        }
+    }
+</style>

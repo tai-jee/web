@@ -55,6 +55,10 @@ export default defineConfig({
                 context: "server",
                 access: "secret",
             }),
+            STEAM_API_KEY: envField.string({
+                context: "server",
+                access: "secret",
+            }),
         },
     },
 });

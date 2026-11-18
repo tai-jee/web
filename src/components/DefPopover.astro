@@ -1,0 +1,96 @@
+---
+interface Props {
+    term: string;
+    def: string;
+}
+
+const { term, def } = Astro.props;
+---
+
+<span class="dict" data-def={def}>
+    <slot />
+</span>
+
+<script>
+    Array.from(
+        document.getElementsByClassName(
+            "dict",
+        ) as HTMLCollectionOf<HTMLElement>,
+    ).forEach((word, i) => {
+        const anchor = `--def-word-${i}`;
+        word.style.setProperty("anchor-name", anchor);
+
+        const pop = document.createElement("aside");
+        pop.popover = "hint";
+        pop.classList.add("dict-popover", "drop");
+        pop.style.setProperty("position-anchor", anchor);
+
+        const popWord = document.createElement("p");
+        pop.appendChild(popWord);
+        popWord.textContent = word.textContent;
+        popWord.classList.add("dict-term");
+
+        const popDef = document.createElement("p");
+        pop.appendChild(popDef);
+        popDef.textContent = word.dataset.def ?? "";
+        popDef.classList.add("dict-def");
+
+        document.body.appendChild(pop);
+
+        word.addEventListener("mouseenter", () => pop.showPopover());
+        word.addEventListener("mouseleave", () => pop.hidePopover());
+        word.addEventListener("click", () => pop.togglePopover());
+    });
+</script>
+
+<style>
+    .dict {
+        cursor: help;
+        color: var(--base0E);
+        border-bottom: 0.05rem dashed var(--base02);
+    }
+
+    [popover] {
+        animation: fade-out 0.2s ease-out;
+
+        position-area: bottom;
+        position-try-fallbacks:
+            flip-block,
+            flip-inline,
+            flip-block flip-inline;
+        inset: auto;
+
+        width: 320px;
+        max-width: 60rch;
+        padding: 12pt;
+        margin: 0.3rem;
+
+        border-radius: 12pt;
+        border: 0.2pt solid var(--base01);
+
+        color: inherit;
+
+        background-color: color-mix(in srgb, var(--base00), transparent 20%);
+        backdrop-filter: blur(6px);
+
+        box-shadow:
+            0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        .dict-term,
+        .dict-def {
+            margin: 0;
+        }
+
+        .dict-term {
+            font-weight: bold;
+            font-style: italic;
+            color: var(--base03);
+        }
+    }
+
+    [popover]:popover-open {
+        animation: fade-in 0.2s ease-out;
+        opacity: 1;
+    }
+</style>

@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+---
+
+<footer class="footer">
+	<div class="footer-top">
+		<div class="copyright">
+			<p class="title">bingpie</p>
+			<p class="copyright">&#169; bingpie 2026</p>
+		</div>
+		<div class="thankies">
+			<p>Thanks for visiting c:</p>
+		</div>
+	</div>
+
+	<div class="badges">
+		<Image
+			src="/img/bingpie-light-88x31.png"
+			alt="bingpie"
+			width="88"
+			height="31"
+		/>
+		<Image
+			src="/img/sonny-doggy-88x31.gif"
+			alt="sonnydoggy"
+			width="88"
+			height="31"
+		/>
+		<Image
+			src="/img/brainmade-88x31.png"
+			alt="Brain Made"
+			width="88"
+			height="31"
+		/>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		position: relative;
+
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rlh;
+
+		width: var(--content-width);
+
+		padding-block: 1rem;
+
+		@media only screen and (max-width: 768px) {
+			padding-inline: 1rem;
+		}
+
+		margin-top: 2rem;
+		margin-inline: auto;
+
+		background-color: var(--base00);
+
+		border-style: solid;
+		border-width: 0.5pt 0 0 0;
+		border-image: var(--gradient-border);
+
+		p {
+			margin: 0;
+		}
+	}
+
+	.footer-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+
+		@media only screen and (max-width: 768px) {
+			flex-direction: column;
+			gap: 0.4rlh;
+		}
+	}
+
+	.footer-top > .copyright {
+		display: flex;
+		align-items: baseline;
+		gap: 1rch;
+
+		& > .title {
+			font-size: 2rem;
+		}
+
+		& > .copyright {
+			color: var(--base03);
+			font-size: 0.8rem;
+		}
+	}
+</style>

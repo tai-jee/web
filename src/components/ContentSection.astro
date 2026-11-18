@@ -1,0 +1,36 @@
+---
+interface Props {
+    subheading: string;
+}
+
+const { subheading } = Astro.props;
+---
+
+<div class="section">
+    <h3 class="subheading">{subheading}</h3>
+    <div class="content">
+        <slot />
+    </div>
+</div>
+
+<style>
+    .section {
+        gap: 2ch;
+
+        > .subheading {
+            font-size: 1em;
+            font-style: italic;
+            font-weight: normal;
+
+            color: var(--base03);
+
+            margin: 0;
+        }
+
+        > .content {
+            max-width: 100rch;
+
+            padding-block-end: 0.6lh;
+        }
+    }
+</style>

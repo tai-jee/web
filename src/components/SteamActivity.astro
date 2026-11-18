@@ -1,0 +1,193 @@
+---
+import { Image } from "astro:assets";
+
+// avatar: https://avatars.steamstatic.com/f1f020e74b890b30500c6eecf71f293b54ac9f5a_full.jpg
+---
+
+<astro-steam class="steam-activity">
+    <Image
+        class="avatar"
+        src="https://avatars.steamstatic.com/f1f020e74b890b30500c6eecf71f293b54ac9f5a_full.jpg"
+        alt="Steam avatar"
+        width="128"
+        height="128"
+    />
+    <div class="activity">
+        <span class="username">bingpie</span>
+        <span class="status">Online</span>
+    </div>
+</astro-steam>
+
+<script>
+    import moment from "moment";
+
+    const POLLING_INTERVAL_SEC = 30;
+
+    interface PlayerSummaryResponse {
+        response: {
+            players: {
+                personaname: string;
+                profileurl: string;
+                avatarfull: string;
+                personastate: PersonaState;
+                lastlogoff: number;
+                gameextrainfo?: string;
+                gameid?: string;
+            }[];
+        };
+    }
+
+    enum PersonaState {
+        Offline = 0,
+        Online = 1,
+        Busy = 2,
+        Away = 3,
+        Snooze = 4,
+        LTT = 5, // looking to trade, not linus tech tips
+        LTP = 6,
+    }
+
+    class SteamActivity extends HTMLElement {
+        connectedCallback() {
+            const update = async () => {
+                const r = await fetch("/api/steam-status");
+                const s = (await r.json()) as PlayerSummaryResponse;
+
+                if (!r.ok) {
+                    console.error("Failed to fetch steam-status", r);
+                }
+
+                const player = s.response.players[0];
+                const {
+                    personaname: username,
+                    profileurl: url,
+                    personastate: status,
+                    lastlogoff: lastLogoff,
+                    gameextrainfo: gameName,
+                    gameid: gameId,
+                } = player;
+
+                const avatarEl = this.querySelector(
+                    ".avatar",
+                ) as HTMLImageElement;
+                const nameEl = this.querySelector(
+                    ".username",
+                ) as HTMLSpanElement;
+                const statusEl = this.querySelector(
+                    ".status",
+                ) as HTMLDivElement;
+
+                switch (status) {
+                    case PersonaState.Offline:
+                        const since = moment(
+                            new Date(Math.min(Date.now(), lastLogoff * 1000)),
+                        ).fromNow();
+                        this.dataset.status = "offline";
+                        statusEl.innerText = `Offline since ${since}`;
+                        break;
+
+                    case PersonaState.Busy:
+                        this.dataset.status = "busy";
+                        statusEl.innerText = "Busy";
+                        break;
+
+                    case PersonaState.Away:
+                        this.dataset.status = "away";
+
+                        statusEl.innerText = "Away";
+                        break;
+
+                    default:
+                        if (gameName) {
+                            this.dataset.status = "ingame";
+                            statusEl.innerText = `Playing ${gameName}`;
+                        } else {
+                            this.dataset.status = "online";
+                            statusEl.innerText = "Online";
+                        }
+                        break;
+                }
+
+                setTimeout(update, POLLING_INTERVAL_SEC * 1000);
+            };
+
+            void update();
+        }
+    }
+
+    customElements.define("astro-steam", SteamActivity);
+</script>
+
+<style>
+    :root {
+        --offline: var(--base02);
+        --busy: var(--base09);
+        --away: var(--base0A);
+        --ingame: var(--base0B);
+        --online: var(--base0D);
+    }
+
+    .steam-activity {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        height: 5rem;
+        padding: 0.5rem;
+
+        margin-block: 0.6rlh;
+
+        border: 1px solid var(--base02);
+        border-radius: 2.5rem;
+
+        box-shadow: 0 0 24px -12px var(--status);
+        transition: box-shadow 0.2s ease;
+    }
+
+    .steam-activity {
+        &[data-status="offline"] {
+            --status: var(--offline);
+            box-shadow: 0 0 24px -12px var(--status);
+        }
+
+        &[data-status="busy"] {
+            --status: var(--busy);
+        }
+
+        &[data-status="away"] {
+            --status: var(--away);
+        }
+
+        &[data-status="ingame"] {
+            --status: var(--ingame);
+        }
+
+        &[data-status="online"] {
+            --status: var(--online);
+        }
+    }
+
+    .avatar {
+        border-radius: 50%;
+
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .activity {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .username {
+        font-weight: bold;
+    }
+
+    .status {
+        font-size: 0.8rem;
+        font-style: italic;
+
+        color: var(--base03);
+    }
+</style>

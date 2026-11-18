@@ -1,0 +1,108 @@
+:root {
+    --base00: #1f1c16; /* bg */
+    --base01: #35322d; /* bg_alt */
+    --base02: #47443f; /* surface0 */
+    --base03: #b8a48c; /* fg_subtle (comments) */
+    --base04: #d4c4a8; /* fg_muted */
+    --base05: #faf0e6; /* fg */
+    --base06: #e8d5b7; /* fg_dim */
+    --base07: #fef4e4; /* bright white */
+
+    --base08: #e87777; /* red */
+    --base09: #da9050; /* orange */
+    --base0A: #eac67a; /* yellow */
+    --base0B: #8cb870; /* green */
+    --base0C: #6ab8b0; /* teal */
+    --base0D: #7fa8d4; /* blue */
+    --base0E: #b094cc; /* purple */
+    --base0F: #cc88aa; /* pink */
+
+    --astro-code-foreground: var(--base05);
+    --astro-code-background: var(--base00);
+    --astro-code-token-constant: var(--base09);
+    --astro-code-token-string: var(--base0B);
+    --astro-code-token-comment: var(--base03);
+    --astro-code-token-keyword: var(--base0E);
+    --astro-code-token-parameter: var(--base08);
+    --astro-code-token-function: var(--base0D);
+    --astro-code-token-string-expression: var(--base0C);
+    --astro-code-token-punctuation: var(--base05);
+    --astro-code-token-link: var(--base09);
+
+    --content-width: min(90vw, 120rch);
+    @media only screen and (max-width: 768px) {
+        --content-width: 100vw;
+    }
+
+    --gradient-border-radial: radial-gradient(
+            transparent,
+            var(--border-color, var(--base06)),
+            transparent
+        )
+        27;
+
+    --gradient-border-b: linear-gradient(
+            to bottom,
+            var(--border-color, var(--base06)),
+            transparent 80%
+        )
+        27;
+
+    --gradient-border-l: linear-gradient(
+            to left,
+            var(--border-color, var(--base06)),
+            transparent 80%
+        )
+        27;
+
+    --gradient-border-t: linear-gradient(to top, var(--base06), transparent 80%)
+        27;
+
+    --gradient-border-r: linear-gradient(
+            to right,
+            var(--border-color, var(--base06)),
+            transparent 80%
+        )
+        27;
+
+    font-size: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    corner-shape: squircle;
+}
+
+a {
+    color: var(--base0D);
+    text-decoration: none;
+}
+
+*::selection {
+    background-color: var(--base02);
+}
+
+html {
+    color: var(--base05);
+    background-color: var(--base00);
+}
+
+body {
+    margin: 0;
+
+    line-height: 1.4;
+
+    text-transform: lowercase;
+    font-family: var(--libron), sans-serif;
+}
+
+main {
+    position: relative;
+    width: var(--content-width);
+    margin: auto;
+
+    @media only screen and (max-width: 768px) {
+        width: 100vw;
+        padding-inline: 1rem;
+    }
+}
