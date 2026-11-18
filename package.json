@@ -1,19 +1,19 @@
 {
-	"name": "bingpie-web",
-	"dependencies": {
-		"@astrojs/cloudflare": "^14.4.8",
-		"@astrojs/node": "^11.1.9",
-		"astro": "^7.3.8",
-		"moment": "^2.31.0"
-	},
-	"devDependencies": {
-		"prettier": "3.9.10",
-		"prettier-plugin-astro": "1.1.1",
-		"wrangler": "^4.162.0"
-	},
-	"scripts": {
-		"build": "wrangler types && npx astro build",
-		"deploy": "wrangler types && wrangler deploy",
-		"preview": "wrangler types && astro build && wrangler dev"
-	}
+    "name": "bingpie-web",
+    "dependencies": {
+        "@astrojs/cloudflare": "^14.4.8",
+        "@astrojs/node": "^11.1.9",
+        "astro": "^7.3.8",
+        "moment": "^2.31.0"
+    },
+    "devDependencies": {
+        "prettier": "3.9.10",
+        "prettier-plugin-astro": "1.1.1",
+        "wrangler": "^4.162.0"
+    },
+    "scripts": {
+        "build": "wrangler types && CLOUDFLARE_ENV=production astro build",
+        "deploy": "wrangler types && wrangler deploy",
+        "preview": "wrangler types && astro build && wrangler dev"
+    }
 }

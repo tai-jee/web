@@ -29,9 +29,6 @@ jobs:
             - name: Build
               working-directory: site
               run: npm run build
-              env:
-                  LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
-                  STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
 
             - name: Deploy
               uses: cloudflare/wrangler-action@v4
