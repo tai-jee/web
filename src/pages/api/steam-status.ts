@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { STEAM_API_KEY } from "astro:env/server";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
@@ -8,7 +8,7 @@ const URL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002";
 export const GET: APIRoute = async ({ cache }) => {
     const params = new URLSearchParams({
         steamids: "76561198987068977",
-        key: STEAM_API_KEY,
+        key: env.STEAM_API_KEY,
     });
 
     const url = `${URL}?${params.toString()}`;

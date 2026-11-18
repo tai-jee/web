@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { LASTFM_API_KEY } from "astro:env/server";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({ cache }) => {
         limit: "1",
         extended: "1",
         format: "json",
-        api_key: LASTFM_API_KEY,
+        api_key: env.LASTFM_API_KEY,
     });
 
     const url = `${URL}?${params.toString()}`;

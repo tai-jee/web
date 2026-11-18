@@ -48,17 +48,4 @@ export default defineConfig({
 
     adapter: cloudflare(),
     cache: cacheCloudflare(),
-
-    env: {
-        schema: {
-            LASTFM_API_KEY: envField.string({
-                context: "server",
-                access: "secret",
-            }),
-            STEAM_API_KEY: envField.string({
-                context: "server",
-                access: "secret",
-            }),
-        },
-    },
 });
