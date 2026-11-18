@@ -5,42 +5,41 @@ interface Props {
 }
 
 const { term, def } = Astro.props;
+const anchor = `--def-word-${crypto.randomUUID()}`;
 ---
 
-<span class="dict" data-def={def}>
+<span class="dict" data-def={def} style={{ anchorName: anchor }}>
     <slot />
 </span>
-
+<aside popover="hint" class="dict-popover" style={{ positionAnchor: anchor }}>
+    <p class="dict-term">{term}</p>
+    <p class="dict-def">{def}</p>
+</aside>
 <script>
-    Array.from(
-        document.getElementsByClassName(
-            "dict",
-        ) as HTMLCollectionOf<HTMLElement>,
-    ).forEach((word, i) => {
-        const anchor = `--def-word-${i}`;
-        word.style.setProperty("anchor-name", anchor);
+    //     Array.from(
+    //         document.getElementsByClassName(
+    //             "dict",
+    //         ) as HTMLCollectionOf<HTMLElement>,
+    //     ).forEach((word, i) => {
+    //         const anchor = `--def-word-${i}`;
+    //         word.style.setProperty("anchor-name", anchor);
+    //
+    //         const pop = document.createElement("aside");
+    //         pop.popover = "hint";
+    //         pop.classList.add("dict-popover");
+    //         pop.style.setProperty("position-anchor", anchor);
+    //
+    //         word.addEventListener("mouseenter", () => pop.showPopover());
+    //         word.addEventListener("mouseleave", () => pop.hidePopover());
+    //         word.addEventListener("click", () => pop.togglePopover());
+    //     });
 
-        const pop = document.createElement("aside");
-        pop.popover = "hint";
-        pop.classList.add("dict-popover", "drop");
-        pop.style.setProperty("position-anchor", anchor);
+    const text = document.querySelector(".dict") as HTMLSpanElement;
+    const popover = document.querySelector(".dict-popover")! as HTMLElement;
 
-        const popWord = document.createElement("p");
-        pop.appendChild(popWord);
-        popWord.textContent = word.textContent;
-        popWord.classList.add("dict-term");
-
-        const popDef = document.createElement("p");
-        pop.appendChild(popDef);
-        popDef.textContent = word.dataset.def ?? "";
-        popDef.classList.add("dict-def");
-
-        document.body.appendChild(pop);
-
-        word.addEventListener("mouseenter", () => pop.showPopover());
-        word.addEventListener("mouseleave", () => pop.hidePopover());
-        word.addEventListener("click", () => pop.togglePopover());
-    });
+    text.addEventListener("mouseenter", () => popover.showPopover());
+    text.addEventListener("mouseleave", () => popover.hidePopover());
+    text.addEventListener("click", () => popover.togglePopover());
 </script>
 
 <style>
@@ -60,10 +59,9 @@ const { term, def } = Astro.props;
             flip-block flip-inline;
         inset: auto;
 
-        width: 320px;
-        max-width: 60rch;
+        width: min(60rch, calc(100% - 2rch));
         padding: 12pt;
-        margin: 0.3rem;
+        margin: 1rch;
 
         border-radius: 12pt;
         border: 0.2pt solid var(--base01);
@@ -76,21 +74,16 @@ const { term, def } = Astro.props;
         box-shadow:
             0 4px 8px 0 rgba(0, 0, 0, 0.2),
             0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-        .dict-term,
-        .dict-def {
-            margin: 0;
-        }
-
-        .dict-term {
-            font-weight: bold;
-            font-style: italic;
-            color: var(--base03);
-        }
     }
 
-    [popover]:popover-open {
-        animation: fade-in 0.2s ease-out;
-        opacity: 1;
+    .dict-term,
+    .dict-def {
+        margin: 0;
+    }
+
+    .dict-term {
+        font-weight: bold;
+        font-style: italic;
+        color: var(--base03);
     }
 </style>
